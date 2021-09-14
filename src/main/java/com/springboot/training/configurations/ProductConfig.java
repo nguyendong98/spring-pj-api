@@ -11,25 +11,25 @@ import java.util.List;
 @Configuration
 public class ProductConfig {
 
-//    @Bean
-//    CommandLineRunner commandLineRunner(
-//            ProductRepository repository) {
-//        return args -> {
-//            Product table = new Product(
-//                    "table",
-//                    "This is a table",
-//                    300000
-//            );
-//            Product laptop = new Product(
-//                    "laptop",
-//                    "This is a laptop",
-//                    500000
-//            );
-//
-//            repository.saveAll(
-//                    List.of(table, laptop)
-//            );
-//        };
-//    }
+    @Bean
+    CommandLineRunner commandLineRunner(
+            ProductRepository repository) {
+        return args -> {
+            Product table = new Product(
+                    "table",
+                    "This is a table",
+                    300000
+            );
+            Product laptop = new Product(
+                    "laptop",
+                    "This is a laptop",
+                    500000
+            );
+
+            repository.saveAll(
+                    List.of(table, laptop)
+            );
+        };
+    }
 
 }

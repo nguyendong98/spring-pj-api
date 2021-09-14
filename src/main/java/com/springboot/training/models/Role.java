@@ -1,13 +1,15 @@
 package com.springboot.training.models;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
 @Entity
 @Table(name = "roles")
 public class Role {

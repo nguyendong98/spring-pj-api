@@ -1,4 +1,4 @@
-package com.springboot.training.controllers;
+package com.springboot.training.controllers.api;
 
 import com.springboot.training.models.Product;
 import com.springboot.training.services.ProductService;

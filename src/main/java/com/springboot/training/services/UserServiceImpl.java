@@ -1,7 +1,14 @@
 package com.springboot.training.services;
 
+import com.springboot.training.dto.mapper.UserMapper;
+import com.springboot.training.dto.model.UserDto;
+//import com.springboot.training.exception.BRSException;
+import com.springboot.training.exception.BRSException;
+import com.springboot.training.exception.EntityType;
+import com.springboot.training.exception.ExceptionType;
 import com.springboot.training.models.Role;
 import com.springboot.training.models.User;
+import com.springboot.training.models.UserRoles;
 import com.springboot.training.repo.RoleRepository;
 import com.springboot.training.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +21,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+
+import static com.springboot.training.exception.EntityType.USER;
+import static com.springboot.training.exception.ExceptionType.DUPLICATE_ENTITY;
+
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -43,10 +53,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User saveUser(User user) {
-        log.info("Saving new user {} to the database", user.getName());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public UserDto signup(UserDto userDto) {
+        Role userRole;
+        User user = userRepository.findByUsername(userDto.getUsername());
+            if (user == null) {
+            if (userDto.isAdmin()) {
+                userRole = roleRepository.findByName("ADMIN");
+            } else {
+                userRole = roleRepository.findByName("USER");
+            }
+            user = new User()
+                    .setUsername(userDto.getUsername())
+                    .setName(userDto.getName())
+                    .setPassword(passwordEncoder.encode(userDto.getPassword()))
+                    .setRoles(new HashSet<>(List.of(userRole)));
+            return UserMapper.toUserDto(userRepository.save(user));
+        }
+        throw exception(USER, DUPLICATE_ENTITY, userDto.getUsername());
     }
 
     @Override
@@ -71,5 +94,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    /**
+     * Returns a new RuntimeException
+     *
+     * @param entityType
+     * @param exceptionType
+     * @param args
+     * @return
+     */
+    private RuntimeException exception(EntityType entityType, ExceptionType exceptionType, String... args) {
+        return BRSException.throwException(entityType, exceptionType, args);
     }
 }

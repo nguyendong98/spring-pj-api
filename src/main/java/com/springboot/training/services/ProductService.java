@@ -19,7 +19,6 @@ public class ProductService {
     }
 
     public Product create(Product product) {
-        System.out.println(product);
         return productRepository.save(product);
     }
 
