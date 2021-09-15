@@ -13,27 +13,31 @@ import com.springboot.training.repo.RoleRepository;
 import com.springboot.training.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static com.springboot.training.exception.EntityType.USER;
 import static com.springboot.training.exception.ExceptionType.DUPLICATE_ENTITY;
 
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
+@Component
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -48,6 +52,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         });
+        log.info("role {}", authorities);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
 
     }
@@ -58,9 +63,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.findByUsername(userDto.getUsername());
             if (user == null) {
             if (userDto.isAdmin()) {
-                userRole = roleRepository.findByName("ADMIN");
+                userRole = roleRepository.findByName("ROLE_ADMIN");
             } else {
-                userRole = roleRepository.findByName("USER");
+                userRole = roleRepository.findByName("ROLE_USER");
             }
             user = new User()
                     .setUsername(userDto.getUsername())
@@ -70,6 +75,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return UserMapper.toUserDto(userRepository.save(user));
         }
         throw exception(USER, DUPLICATE_ENTITY, userDto.getUsername());
+    }
+
+
+
+    @Override
+    public Stream<UserDto> getAllUser() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(UserMapper::toUserDto);
     }
 
     @Override
@@ -91,10 +104,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
+
 
     /**
      * Returns a new RuntimeException

@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.util.HashSet;
 
@@ -23,11 +24,11 @@ public class DemoApplication {
 	@Bean
 	CommandLineRunner run(UserService userService) {
 		return args -> {
-			userService.saveRole(new Role(null, "ADMIN"));
-			userService.saveRole(new Role(null, "USER"));
+			userService.saveRole(new Role(null, "ROLE_ADMIN"));
+			userService.saveRole(new Role(null, "ROLE_USER"));
 
 			userService.signup(
-					new UserDto("admin", "admin", "123456", true, new HashSet<>())
+					new UserDto(null, "admin", "admin", "123456", true, new HashSet<>())
 			);
 //			userService.saveUser(
 //					new User(null, "Nguyen Nam", "ngnam2001", "123456", new HashSet<>())

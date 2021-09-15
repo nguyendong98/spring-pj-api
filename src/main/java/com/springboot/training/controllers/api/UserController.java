@@ -3,47 +3,36 @@ package com.springboot.training.controllers.api;
 import com.springboot.training.controllers.request.UserSignupRequest;
 import com.springboot.training.dto.model.UserDto;
 import com.springboot.training.dto.response.Response;
-import com.springboot.training.models.Role;
 import com.springboot.training.models.User;
 import com.springboot.training.services.UserService;
-import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.List;
 
+@RequestMapping("api/v1/users")
 @RestController
-@RequestMapping(path = "api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
 
-    @GetMapping()
-    public ResponseEntity<List<User>>getUsers() {
-        return ResponseEntity.ok().body(userService.getUsers());
-    }
 
-    /**
-     * Handles the incoming POST API "/v1/user/signup"
-     *
-     * @param userSignupRequest
-     * @return
-     */
     @PostMapping("/register")
     public Response signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
         return Response.ok().setPayload(registerUser(userSignupRequest, false));
     }
 
-    /**
-     * Register a new user in the database
-     *
-     * @param userSignupRequest
-     * @return
-     */
+    @GetMapping()
+    public Response get() {
+        return Response
+                .ok()
+                .setPayload(userService.getAllUser());
+    }
+
     private UserDto registerUser(UserSignupRequest userSignupRequest, boolean isAdmin) {
         UserDto userDto = new UserDto()
                 .setName(userSignupRequest.getName())

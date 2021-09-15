@@ -17,6 +17,7 @@ import java.util.Collection;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
+    private Long id;
     private String name;
     private String username;
     private String password;

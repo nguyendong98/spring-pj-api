@@ -29,9 +29,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Slf4j
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getServletPath().equals("/api/v1/login")) {
-            chain.doFilter(request, response);
+            filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -46,8 +46,11 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     stream(roles).forEach(role -> {
                         authorities.add(new SimpleGrantedAuthority(role));
                     });
+                    log.info("role?? : {}", roles);
+                    log.info("test ne {}", authorities);
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    filterChain.doFilter(request, response);
                 } catch (Exception exception) {
                     log.error("Error logging in: {}", exception.getMessage());
                     response.setHeader("error", exception.getMessage());
@@ -60,7 +63,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                 }
 
             } else {
-                chain.doFilter(request, response);
+                filterChain.doFilter(request, response);
             }
         }
     }

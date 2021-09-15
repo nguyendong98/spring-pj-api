@@ -42,9 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/api/v1/login"); // change login default url of spring security
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers(POST,"/api/v1/login").permitAll();
-        http.authorizeRequests().antMatchers("/api/v1/users/register/**").permitAll();
-        http.authorizeRequests().antMatchers(GET, "/api/v1/users/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers("/").permitAll();
+        http.authorizeRequests().antMatchers("/api/v1/login/**").permitAll();
+        http.authorizeRequests().antMatchers( "/api/v1/users/register/**").permitAll();
+        http.authorizeRequests().antMatchers(GET,"/api/v1/users").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -65,6 +66,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-
 }

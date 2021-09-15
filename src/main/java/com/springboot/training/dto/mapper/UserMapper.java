@@ -16,6 +16,7 @@ public class UserMapper {
 
     public static UserDto toUserDto(User user) {
         return new UserDto()
+                .setId(user.getId())
                 .setUsername(user.getUsername())
                 .setName(user.getName())
                 .setRoles(new HashSet<RoleDto>(user
