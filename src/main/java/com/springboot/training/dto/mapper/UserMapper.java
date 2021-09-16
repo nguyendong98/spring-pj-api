@@ -17,13 +17,12 @@ public class UserMapper {
     public static UserDto toUserDto(User user) {
         return new UserDto()
                 .setId(user.getId())
-                .setUsername(user.getUsername())
                 .setName(user.getName())
+                .setUsername(user.getUsername())
                 .setRoles(new HashSet<RoleDto>(user
                         .getRoles()
                         .stream()
                         .map(role -> new ModelMapper().map(role, RoleDto.class))
                         .collect(Collectors.toSet())));
     }
-
 }

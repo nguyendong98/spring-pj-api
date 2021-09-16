@@ -1,5 +1,7 @@
 package com.springboot.training.controllers.api;
 
+import com.springboot.training.controllers.request.ForgotPassRequest;
+import com.springboot.training.controllers.request.OTPRequest;
 import com.springboot.training.controllers.request.UserSignupRequest;
 import com.springboot.training.dto.model.UserDto;
 import com.springboot.training.dto.response.Response;
@@ -26,12 +28,23 @@ public class UserController {
         return Response.ok().setPayload(registerUser(userSignupRequest, false));
     }
 
+    @PostMapping("/forgotpass/request")
+    public Response requestOTP(@RequestBody OTPRequest otpRequest) {
+        return Response.ok().setPayload(userService.requestOTP(otpRequest));
+    }
+
+    @PostMapping("/forgotpass/verify")
+    public Response verifyOTPAndChangePass(@RequestBody ForgotPassRequest forgotPassRequest) {
+        return Response.ok().setPayload(userService.verifyOTPAndChangePass(forgotPassRequest));
+    }
+
     @GetMapping()
     public Response get() {
         return Response
                 .ok()
                 .setPayload(userService.getAllUser());
     }
+
 
     private UserDto registerUser(UserSignupRequest userSignupRequest, boolean isAdmin) {
         UserDto userDto = new UserDto()
@@ -42,21 +55,8 @@ public class UserController {
         return userService.signup(userDto);
     }
 
-//    @PostMapping("/role/save")
-//    public ResponseEntity<Role>saveRole(@RequestBody Role role) {
-//        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/v1/user/role/save").toUriString());
-//        return ResponseEntity.created(uri).body(userService.saveRole(role));
-//    }
 
-//    @PostMapping("/role/addtouser")
-//    public ResponseEntity<Role>addRoleToUser(@RequestBody RoleToUserForm form) {
-//        userService.addRoleToUser(form.getUsername(), form.getRoleName());
-//        return ResponseEntity.ok().build();
-//    }
+
+
 }
 
-//@Data
-//class RoleToUserForm {
-//    private String username;
-//    private String roleName;
-//}

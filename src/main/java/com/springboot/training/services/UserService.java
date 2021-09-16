@@ -1,10 +1,10 @@
 package com.springboot.training.services;
 
+import com.springboot.training.controllers.request.ForgotPassRequest;
+import com.springboot.training.controllers.request.OTPRequest;
 import com.springboot.training.dto.model.UserDto;
 import com.springboot.training.models.Role;
 import com.springboot.training.models.User;
-import java.util.List;
-import java.util.Set;
 import java.util.stream.Stream;
 
 public interface UserService {
@@ -19,7 +19,21 @@ public interface UserService {
     Stream<UserDto> getAllUser();
 
 
+    /**
+     * Forget password
+     *
+     * @param otpRequest
+     * @return
+     */
+    String requestOTP(OTPRequest otpRequest);
 
+    /**
+     * Verify and change password
+     *
+     * @param forgotPassRequest
+     * @return
+     */
+    String verifyOTPAndChangePass(ForgotPassRequest forgotPassRequest);
 
 
     Role saveRole(Role role);

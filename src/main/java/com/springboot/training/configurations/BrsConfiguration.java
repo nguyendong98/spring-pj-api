@@ -34,44 +34,44 @@ public class BrsConfiguration {
     /**
      * Group BRS contains operations related to reservations and agency management
      */
-//    @Bean
-//    public Docket swaggerBRSApi() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .groupName("BRS")
-//                .select()
-//                .apis(RequestHandlerSelectors.basePackage("com.starterkit.springboot.brs.controller.v1.api"))
-//                .paths(PathSelectors.any())
-//                .build()
-//                .apiInfo(apiInfo())
-//                .securitySchemes(Arrays.asList(apiKey()));
-//    }
-//
-//    /**
-//     * Group User contains operations related to user management such as login/logout
-//     */
-//    @Bean
-//    public Docket swaggerUserApi() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .groupName("User")
-//                .select()
-//                .apis(RequestHandlerSelectors.basePackage("com.starterkit.springboot.brs.config"))
-//                .paths(PathSelectors.any())
-//                .build()
-//                .apiInfo(apiInfo())
-//                .securitySchemes(Arrays.asList(apiKey()));
-//    }
-//
-//    private ApiInfo apiInfo() {
-//        return new ApiInfoBuilder().title("Bus Reservation System - REST APIs")
-//                .description("Spring Boot starter kit application.").termsOfServiceUrl("")
-//                .contact(new Contact("Arpit Khandelwal", "https://medium.com/the-resonant-web", "khandelwal.arpit@outlook.com"))
-//                .license("Apache License Version 2.0")
-//                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
-//                .version("0.0.1")
-//                .build();
-//    }
-//
-//    private ApiKey apiKey() {
-//        return new ApiKey("apiKey", "Authorization", "header");
-//    }
+    @Bean
+    public Docket swaggerBRSApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("BRS")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.springboot.training.controllers.api"))
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(apiInfo())
+                .securitySchemes(Arrays.asList(apiKey()));
+    }
+
+    /**
+     * Group User contains operations related to user management such as login/logout
+     */
+    @Bean
+    public Docket swaggerUserApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("User")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.starterkit.springboot.brs.config"))
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(apiInfo())
+                .securitySchemes(Arrays.asList(apiKey()));
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder().title("Bus Reservation System - REST APIs")
+                .description("Spring Boot starter kit application.").termsOfServiceUrl("")
+                .contact(new Contact("Arpit Khandelwal", "https://medium.com/the-resonant-web", "khandelwal.arpit@outlook.com"))
+                .license("Apache License Version 2.0")
+                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
+                .version("0.0.1")
+                .build();
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("apiKey", "Authorization", "header");
+    }
 }

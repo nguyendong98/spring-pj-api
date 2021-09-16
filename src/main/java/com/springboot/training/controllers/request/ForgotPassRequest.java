@@ -14,15 +14,14 @@ import javax.validation.constraints.NotEmpty;
 @Accessors(chain = true)
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserSignupRequest {
-
-    @Email(message = "{constraints.Email.message}")
-    @NotEmpty(message = "{constraints.NotEmpty.message}")
+public class ForgotPassRequest {
+    @Email
+    @NotEmpty
     private String username;
 
-    @NotEmpty(message = "{constraints.NotEmpty.message}")
-    private String name;
+    @NotEmpty
+    private String newPass;
 
-    @NotEmpty(message = "{constraints.NotEmpty.message}")
-    private String password;
+    @NotEmpty
+    private String code;
 }

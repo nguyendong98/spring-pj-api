@@ -14,15 +14,8 @@ import javax.validation.constraints.NotEmpty;
 @Accessors(chain = true)
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserSignupRequest {
-
-    @Email(message = "{constraints.Email.message}")
-    @NotEmpty(message = "{constraints.NotEmpty.message}")
+public class OTPRequest {
+    @Email
+    @NotEmpty
     private String username;
-
-    @NotEmpty(message = "{constraints.NotEmpty.message}")
-    private String name;
-
-    @NotEmpty(message = "{constraints.NotEmpty.message}")
-    private String password;
 }

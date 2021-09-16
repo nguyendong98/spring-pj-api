@@ -28,7 +28,7 @@ public class DemoApplication {
 			userService.saveRole(new Role(null, "ROLE_USER"));
 
 			userService.signup(
-					new UserDto(null, "admin", "admin", "123456", true, new HashSet<>())
+					new UserDto(null, "admin", "admin@gmail.com", "123456", true, new HashSet<>())
 			);
 //			userService.saveUser(
 //					new User(null, "Nguyen Nam", "ngnam2001", "123456", new HashSet<>())
