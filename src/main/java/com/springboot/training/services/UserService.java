@@ -16,11 +16,17 @@ public interface UserService {
      */
     UserDto signup(UserDto userDto);
 
+
+    /**
+     * Get all  user
+     *
+     * @return
+     */
     Stream<UserDto> getAllUser();
 
 
     /**
-     * Forget password
+     * Request OTP
      *
      * @param otpRequest
      * @return
@@ -35,8 +41,14 @@ public interface UserService {
      */
     String verifyOTPAndChangePass(ForgotPassRequest forgotPassRequest);
 
+    /**
+     * Verify and change password
+     *
+     * @param username
+     * @return
+     */
+    UserDto getUserByUsername(String username);
 
     Role saveRole(Role role);
     void addRoleToUser(String username, String roleName);
-    User getUser(String username);
 }
