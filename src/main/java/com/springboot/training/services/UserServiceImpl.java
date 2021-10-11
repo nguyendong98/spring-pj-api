@@ -37,9 +37,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
-    public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
-    public static final String SERVICE_SID = System.getenv("TWILIO_SERVICE_SID");
+    public static final String ACCOUNT_SID = "AC62952f9612e54a1fdcb1c15aa132599f";
+    public static final String AUTH_TOKEN = "c2586ce626f3da1a89e59607afee3d9c";
+    public static final String SERVICE_SID = "VA15a7790f71697815b7d2dd91bc7996f4";
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

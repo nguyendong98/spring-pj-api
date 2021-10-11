@@ -1,7 +1,7 @@
 package com.springboot.training.services;
-
-import com.springboot.training.controllers.request.ProductCreateRequest;
 import com.springboot.training.dto.model.ProductDto;
+import com.springboot.training.models.Product;
+
 import java.util.stream.Stream;
 
 public interface ProductService {
@@ -15,10 +15,10 @@ public interface ProductService {
 
     /**
      * Create product
-     * @param productCreateRequest
+     * @param product
      * @return
      */
-    ProductDto createProduct(ProductCreateRequest productCreateRequest);
+    Product createProduct(Product product);
 
     /**
      * Delete product

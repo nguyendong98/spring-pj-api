@@ -18,4 +18,10 @@ public class ProductDto {
     private String name;
     private String description;
     private Integer price;
+
+    public ProductDto(String name, String description, Integer price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }

@@ -22,4 +22,10 @@ public class Product {
     private String description;
 
     private Integer price;
+
+    public Product(String name, String description, Integer price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }

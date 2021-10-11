@@ -1,15 +1,19 @@
 package com.springboot.training.controllers.api;
 
-import com.springboot.training.controllers.request.ProductCreateRequest;
+import com.springboot.training.dto.model.ProductDto;
 import com.springboot.training.dto.response.Response;
+import com.springboot.training.models.Product;
 import com.springboot.training.services.ProductService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/products")
+@Api
 public class ProductController {
     private final ProductService productService;
     @GetMapping
@@ -20,16 +24,15 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public Response createProduct(@RequestBody ProductCreateRequest productCreateRequest) {
-        return Response.ok().setPayload(productService.createProduct(productCreateRequest));
+    @ApiOperation(value = "", authorizations = {@Authorization(value = "apiKey")})
+    public Response createProduct(@RequestBody Product product) {
+        return Response.ok().setPayload(productService.createProduct(product));
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("/delete/{id}")
+    @ApiOperation(value = "", authorizations = {@Authorization(value = "apiKey")})
     public Response deleteById(@PathVariable Long id) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Allow", "OPTIONS,HEAD,GET,POST,PUT");
         return Response.ok().setPayload(productService.deleteById(id));
     }
-
-
 }

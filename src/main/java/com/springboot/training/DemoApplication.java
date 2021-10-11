@@ -1,17 +1,7 @@
 package com.springboot.training;
-
-import com.springboot.training.dto.model.UserDto;
-import com.springboot.training.models.Role;
-import com.springboot.training.models.User;
-import com.springboot.training.models.UserRoles;
-import com.springboot.training.services.UserService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 
-import java.util.HashSet;
 
 
 @SpringBootApplication
@@ -20,6 +10,7 @@ public class DemoApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(DemoApplication.class, args);
+
 	}
 //	@Bean
 //	CommandLineRunner run(UserService userService) {
@@ -39,6 +30,7 @@ public class DemoApplication {
 //
 //		};
 //	}
+
 
 
 

@@ -19,15 +19,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.springboot.training.exception.EntityType.PRODUCT;
-import static com.springboot.training.exception.EntityType.USER;
 import static com.springboot.training.exception.ExceptionType.DUPLICATE_ENTITY;
-import static com.springboot.training.exception.ExceptionType.ENTITY_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -45,17 +41,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto createProduct(ProductCreateRequest productCreateRequest) {
-        Product product = productRepository.findByName(productCreateRequest.getName());
+    public Product createProduct(Product data) {
+        Product product = productRepository.findByName(data.getName());
         if (product == null) {
             product = new Product()
-                    .setName(productCreateRequest.getName())
-                    .setDescription(productCreateRequest.getDescription())
-                    .setPrice(productCreateRequest.getPrice());
+                    .setName(data.getName())
+                    .setDescription(data.getDescription())
+                    .setPrice(data.getPrice());
             log.info("product is {}", product);
-            return ProductMapper.toProductDto(productRepository.save(product));
+            return productRepository.save(product);
         }
-        throw exception(PRODUCT, DUPLICATE_ENTITY, productCreateRequest.getName());
+        throw exception(PRODUCT, DUPLICATE_ENTITY, data.getName());
     }
 
     @Override

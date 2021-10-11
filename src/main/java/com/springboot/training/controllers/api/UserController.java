@@ -10,6 +10,7 @@ import com.springboot.training.controllers.request.UserSignupRequest;
 import com.springboot.training.dto.model.UserDto;
 import com.springboot.training.dto.response.Response;
 import com.springboot.training.services.UserService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-@RequestMapping("api/v1/users")
+@RequestMapping(path = "api/v1/users")
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -26,7 +27,7 @@ public class UserController {
     private final UserService userService;
 
 
-    @PostMapping("/register")
+    @PostMapping(path = "/register")
     public Response signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
         return Response.ok().setPayload(registerUser(userSignupRequest, false));
     }
